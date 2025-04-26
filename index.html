@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentHub | Premium Bike Rentals</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                        <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="currentColor"/>
+                    </svg>
+                    <span>RentHub</span>
+                </div>
+                <!-- In the navbar section, replace the book-now-btn with login-btn -->
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#bikes">Bikes</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#" class="login-btn">Login</a></li>
+                </ul>
+
+        <!-- Add this modal right before the closing </body> tag -->
+        <div class="modal" id="auth-modal">
+            <div class="modal-content auth-modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="modal-body">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Login</button>
+                        <button class="auth-tab" data-tab="signup">Sign Up</button>
+                    </div>
+            
+            <div class="auth-content active" id="login-content">
+                <form id="login-form" class="auth-form">
+                    <div class="form-group floating-input">
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="login-email" required placeholder=" ">
+                            <label for="login-email">Email Address</label>
+                        </div>
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> <span id="email-error">Please enter a valid email</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group floating-input">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="login-password" required placeholder=" ">
+                            <label for="login-password">Password</label>
+                        </div>
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> <span id="password-error">Please enter your password</span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="#" class="switch-to-signup">Sign up</a></p>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="auth-content" id="signup-content">
+                <form id="signup-form" class="auth-form">
+                    <div class="form-row">
+                        <div class="form-group floating-input">
+                            <div class="input-wrapper">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" id="signup-firstname" required placeholder=" ">
+                                <label for="signup-firstname">First Name</label>
+                            </div>
+                            <div class="error-message">
+                                <i class="fas fa-exclamation-circle"></i> Please enter your first name
+                            </div>
+                        </div>
+                        
+                        <div class="form-group floating-input">
+                            <div class="input-wrapper">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" id="signup-middlename" placeholder=" ">
+                                <label for="signup-middlename">Middle Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group floating-input">
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="signup-lastname" required placeholder=" ">
+                            <label for="signup-lastname">Last Name</label>
+                        </div>
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> Please enter your last name
+                        </div>
+                    </div>
+                    
+                    <div class="form-group floating-input">
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="signup-email" required placeholder=" ">
+                            <label for="signup-email">Email Address</label>
+                        </div>
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> Please enter a valid email
+                        </div>
+                    </div>
+                    
+                    <div class="form-group floating-input">
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input type="tel" id="signup-phone" required placeholder=" ">
+                            <label for="signup-phone">Phone Number</label>
+                        </div>
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> Please enter your phone number
+                        </div>
+                    </div>
+                    
+                    <div class="form-group floating-input">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="signup-password" required placeholder=" ">
+                            <label for="signup-password">Password</label>
+                        </div>
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> Please enter a password
+                        </div>
+                    </div>
+                    
+                    <div class="form-group floating-input">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="signup-confirm-password" required placeholder=" ">
+                            <label for="signup-confirm-password">Confirm Password</label>
+                        </div>
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> Passwords don't match
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-full">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </button>
+                    
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="#" class="switch-to-login">Login</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Ride in Style</h1>
+                        <p class="subtitle">Premium bikes delivered to your location</p>
+                        <div class="highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-bolt"></i>
+                                <span>Instant confirmation</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Citywide delivery</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Full insurance included</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="rental-card">
+                        <div class="card-header">
+                            <h3>Book Your Ride</h3>
+                            <div class="price-display">
+                                <span class="amount">₱350</span>
+                                <span class="period">/day</span>
+                            </div>
+                        </div>
+                        
+                        <!-- In the rental-form div, add these error messages -->
+                    <div class="rental-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="far fa-calendar-alt"></i> Rental Date</label>
+                                <input type="date" class="styled-input" id="rental-date" required placeholder="mm/dd/yyyy">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label><i class="far fa-clock"></i> Duration</label>
+                                <select class="styled-select" id="rental-duration" required>
+                                    <option value="" disabled selected>Select duration</option>
+                                    <option value="4">4 hours (₱150)</option>
+                                    <option value="8">8 hours (₱250)</option>
+                                    <option value="24">1 day (₱350)</option>
+                                    <option value="48">2 days (₱600)</option>
+                                    <option value="72">3 days (₱850)</option>
+                                </select>
+                                <div class="rental-error-message" id="rental-duration-error" style="display: none;">
+                                    <i class="fas fa-exclamation-circle"></i> Please select duration
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label><i class="fas fa-bicycle"></i> Bike Type</label>
+                                <select class="styled-select" id="bike-type" required>
+                                    <option value="" disabled selected>Select bike type</option>
+                                    <option value="mountain">Mountain Pro XT</option>
+                                    <option value="road">Road Elite S1</option>
+                                    <option value="hybrid">E-Cruiser 5000</option>
+                                    <option value="electric">City Hybrid Z3</option>
+                                </select>
+                                <div class="rental-error-message" id="bike-type-error" style="display: none;">
+                                    <i class="fas fa-exclamation-circle"></i> Please select bike type
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                            
+                            <button class="btn btn-primary btn-block" id="start-booking">
+                                <i class="fas fa-lock"></i> Reserve Now
+                            </button>
+                            
+                            <div class="form-footer">
+                                <p><i class="fas fa-info-circle"></i> Free cancellation up to 24 hours</p>
+                            </div>
+                        </div>
+                    </div>
+        </section>
+
+        <!-- Bike Showcase Section -->
+        <section class="bike-showcase" id="bikes">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Bike Collection</h2>
+                    <p>Find the perfect ride for your adventure</p>
+                </div>
+                <div class="bike-grid">
+                    <div class="bike-card">
+                        <div class="bike-image">
+                            <img src="https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&fit=crop&q=80" alt="Mountain Bike" loading="lazy">
+                            <div class="bike-badge">Popular</div>
+                        </div>
+                        <div class="bike-info">
+                            <h3>Mountain Pro XT</h3>
+                            <div class="bike-specs">
+                                <span><i class="fas fa-cog"></i> 21-speed</span>
+                                <span><i class="fas fa-tachometer-alt"></i> Disc brakes</span>
+                            </div>
+                            <div class="bike-price">
+                                <span class="price">₱280/day</span>
+                            </div>
+                            <button class="btn btn-secondary view-details-btn" data-bike="mountain">View Details</button>
+                        </div>
+                    </div>
+                    
+                    <div class="bike-card">
+                        <div class="bike-image">
+                            <img src="https://images.unsplash.com/photo-1511994298241-608e28f14fde?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&fit=crop&q=80" alt="Road Bike" loading="lazy">
+                        </div>
+                        <div class="bike-info">
+                            <h3>Road Elite S1</h3>
+                            <div class="bike-specs">
+                                <span><i class="fas fa-cog"></i> 18-speed</span>
+                                <span><i class="fas fa-tachometer-alt"></i> Lightweight</span>
+                            </div>
+                            <div class="bike-price">
+                                <span class="price">₱320/day</span>
+                            </div>
+                            <button class="btn btn-secondary view-details-btn" data-bike="road">View Details</button>
+                        </div>
+                    </div>
+                    
+                    <div class="bike-card">
+                        <div class="bike-image">
+                            <img src="https://images.unsplash.com/photo-1558981852-426c6c22a060?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&fit=crop&q=80" alt="Electric Bike" loading="lazy">
+                            <div class="bike-badge">New</div>
+                        </div>
+                        <div class="bike-info">
+                            <h3>E-Cruiser 5000</h3>
+                            <div class="bike-specs">
+                                <span><i class="fas fa-bolt"></i> 50km range</span>
+                                <span><i class="fas fa-tachometer-alt"></i> 25km/h</span>
+                            </div>
+                            <div class="bike-price">
+                                <span class="price">₱450/day</span>
+                            </div>
+                            <button class="btn btn-secondary view-details-btn" data-bike="electric">View Details</button>
+                        </div>
+                    </div>
+                    
+                    <div class="bike-card">
+                        <div class="bike-image">
+                            <img src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&fit=crop&q=80" alt="Hybrid Bike" loading="lazy">
+                        </div>
+                        <div class="bike-info">
+                            <h3>City Hybrid Z3</h3>
+                            <div class="bike-specs">
+                                <span><i class="fas fa-cog"></i> 24-speed</span>
+                                <span><i class="fas fa-tachometer-alt"></i> Comfort saddle</span>
+                            </div>
+                            <div class="bike-price">
+                                <span class="price">₱300/day</span>
+                            </div>
+                            <button class="btn btn-secondary view-details-btn" data-bike="hybrid">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Updated Bike Details Modal -->
+<div class="modal" id="bike-details-modal">
+    <div class="modal-content bike-modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-body">
+            <div class="bike-details-content">
+                <div class="bike-details-image">
+                    <img id="detail-bike-image" src="" alt="Bike Image">
+                </div>
+                <div class="bike-details-info">
+                    <h2 id="detail-bike-name"></h2>
+                    <div class="bike-details-specs">
+                        <div class="specs-group">
+                            <h4><i class="fas fa-list-ul"></i> Specifications</h4>
+                            <ul id="detail-bike-specs"></ul>
+                        </div>
+                        <div class="features-group">
+                            <h4><i class="fas fa-star"></i> Features</h4>
+                            <ul id="detail-bike-features"></ul>
+                        </div>
+                    </div>
+                    <div class="bike-details-price">
+                        <span class="price" id="detail-bike-price"></span>
+                        <button class="btn btn-primary book-this-btn">
+                            <i class="fas fa-shopping-cart"></i> Book This Bike
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Booking Modal -->
+<div class="modal" id="booking-modal">
+    <div class="modal-content booking-modal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-body">
+            <div class="form-step active" id="personal-info-step">
+                <div class="form-intro">
+                    <h3><i class="fas fa-user-edit"></i> Personal Details</h3>
+                    <p>We'll use this information to confirm your booking</p>
+                </div>
+                
+                <form id="booking-form" class="elegant-form">
+                    <div class="form-group floating-input">
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="full-name" required placeholder=" ">
+                            <label for="full-name">Full Name</label>
+                        </div>
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> Please enter your full name
+                        </div>
+                    </div>
+                    
+                    <div class="form-group floating-input">
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="email" required placeholder=" ">
+                            <label for="email">Email Address</label>
+                        </div>
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> Please enter a valid email
+                        </div>
+                    </div>
+                    
+                    <div class="form-group floating-input">
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input type="tel" id="phone" required placeholder=" ">
+                            <label for="phone">Phone Number</label>
+                        </div>
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> Please enter your phone number
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="btn btn-primary btn-full" id="next-to-payment">
+                        Continue to Payment <i class="fas fa-arrow-right btn-icon"></i>
+                    </button>
+                </form>
+            </div>
+                    <div class="form-step" id="payment-step">
+                        <h3>Payment Method</h3>
+                        <div class="payment-options">
+                            <div class="payment-option">
+                                <input type="radio" id="walk-in" name="payment" value="walk-in" checked>
+                                <label for="walk-in">
+                                    <i class="fas fa-store"></i>
+                                    <span>Walk-in Payment</span>
+                                    <p>Pay in person when you pick up the bike</p>
+                                </label>
+                            </div>
+                            <div class="payment-option">
+                                <input type="radio" id="gcash" name="payment" value="gcash">
+                                <label for="gcash">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>GCash</span>
+                                    <p>Scan QR code to pay instantly</p>
+                                </label>
+                            </div>
+                            <div class="payment-option">
+                                <input type="radio" id="paymaya" name="payment" value="paymaya">
+                                <label for="paymaya">
+                                    <i class="fas fa-wallet"></i>
+                                    <span>Maya</span>
+                                    <p>Scan QR code to pay securely</p>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="qr-payment" id="gcash-qr">
+                            <h4>GCash Payment</h4>
+                            <div class="qr-code">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=GCashPaymentForPedalPower" alt="GCash QR Code">
+                            </div>
+                            <div class="payment-instructions">
+                                <p>1. Open GCash app</p>
+                                <p>2. Tap 'Scan QR'</p>
+                                <p>3. Scan the code above</p>
+                                <p>4. Enter amount: <strong id="gcash-amount">₱350</strong></p>
+                                <p>5. Then present the reference number to get the bike.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="qr-payment" id="paymaya-qr">
+                            <h4>Maya Payment</h4>
+                            <div class="qr-code">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=MayaPaymentForPedalPower" alt="Maya QR Code">
+                            </div>
+                            <div class="payment-instructions">
+                                <p>1. Open Maya app</p>
+                                <p>2. Tap 'Pay QR'</p>
+                                <p>3. Scan the code above</p>
+                                <p>4. Enter amount: <strong id="paymaya-amount">₱300</strong></p>
+                                <p>5. Then present the reference number to get the bike.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-secondary" id="back-to-personal">Back</button>
+                            <button type="button" class="btn btn-primary" id="proceed-to-review">Continue to Review</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-step" id="review-step">
+                        <h3>Review Your Booking</h3>
+                        <div class="receipt">
+                            <div class="receipt-header">
+                                <h4>Booking Confirmation</h4>
+                                <p>Order #<span id="order-number"></span></p>
+                            </div>
+                            <div class="receipt-body">
+                                <div class="receipt-row">
+                                    <span>Bike Type:</span>
+                                    <span id="review-bike-type">Mountain Bike</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Rental Date:</span>
+                                    <span id="review-date"></span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Duration:</span>
+                                    <span id="review-duration">1 day</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span>Payment Method:</span>
+                                    <span id="review-payment-method">Walk-in</span>
+                                </div>
+                                <div class="receipt-row total">
+                                    <span>Total:</span>
+                                    <span id="review-total">₱350.00</span>
+                                </div>
+                            </div>
+                            <div class="receipt-footer">
+                                <p>Confirmation will be sent to your email</p>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary" id="confirm-booking">Confirm Booking</button>
+                        <button type="button" class="btn btn-secondary" id="back-to-payment">Edit Payment</button>
+                    </div>
+                    
+                    <div class="form-step" id="confirmation-step">
+                        <div class="confirmation-message">
+                            <div class="confirmation-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <h3>Booking Confirmed!</h3>
+                            <p>Your reservation has been successfully submitted.</p>
+                            <p>A confirmation has been sent to <strong id="confirmation-email">user@example.com</strong></p>
+                            <p id="confirmation-timestamp"></p> <!-- This will show the confirmation date/time -->
+                            <div class="receipt-summary">
+                                <p>Order #<span id="confirmation-number">12345</span> • <span id="confirmation-date">June 15, 2023</span></p>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="close-confirmation">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Frequently Asked Questions</h2>
+                    <p>Everything you need to know about our rental service</p>
+                </div>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What do I need to rent a bike?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>You'll need a valid ID, and to be at least 18 years old. For electric bikes, you must be 21 or older.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What is your cancellation policy?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>You can cancel your reservation free of charge up to 24 hours before your rental period begins. Cancellations within 24 hours will incur a 50% charge.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>What happens if the bike gets damaged?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>All rentals include basic damage protection. You'll be responsible for the first $50 of any damage. For major damage or theft, additional charges may apply..</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>Can I extend my rental period?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Absolutely! Just give us a call at least 2 hours before your rental period ends. Extensions are subject to bike availability.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terms and Policies Section -->
+        <section class="policies-section" id="policies">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Terms & Policies</h2>
+                    <p>Important information about our services</p>
+                </div>
+                
+                <div class="policies-tabs">
+                    <button class="policy-tab active" data-tab="terms">Terms of Service</button>
+                    <button class="policy-tab" data-tab="privacy">Privacy Policy</button>
+                    <button class="policy-tab" data-tab="safety">Safety Guidelines</button>
+                </div>
+                
+                <div class="policy-content active" id="terms-content">
+                    <h3>Terms of Service</h3>
+                    <div class="policy-text">
+                        <h4>1. Rental Agreement</h4>
+                        <p>By renting a bicycle from RentHub, you agree to our terms and conditions. The rental period begins at the agreed time and ends when the bicycle is returned to our possession.</p>
+                        
+                        <h4>2. Rental Period and Fees</h4>
+                        <p>Rental fees are calculated based on the time the bicycle is checked out until it is returned. Overtime fees will be charged at 1.5 times the standard hourly rate for each hour or portion thereof that the bicycle is kept beyond the agreed return time.</p>
+                        
+                        <h4>3. Responsibility for Equipment</h4>
+                        <p>You are responsible for the bicycle during the rental period. You agree to return the bicycle in the same condition as when received, except for normal wear and tear.</p>
+
+                        <h4>4. Cancellations</h4>
+                        <p>Reservations may be cancelled without penalty up to 24 hours prior to the scheduled rental time. Cancellations within 24 hours will be charged 50% of the rental fee.</p>
+                    </div>
+                </div>
+                
+                <div class="policy-content" id="privacy-content">
+                    <h3>Privacy Policy</h3>
+                    <div class="policy-text">
+                        <h4>1. Information We Collect</h4>
+                        <p>We collect personal information you provide when making a reservation, including your name, email address, phone number, and payment information. We may also collect usage data about how you interact with our website.</p>
+                        
+                        <h4>2. How We Use Your Information</h4>
+                        <p>Your information is used to process reservations, communicate with you about your rental, improve our services, and for marketing purposes (with your consent). We do not sell your personal information to third parties.</p>
+
+                        <h4>3. Data Security</h4>
+                        <p>We implement appropriate security measures to protect your personal information. Payment information is encrypted and processed through secure payment gateways.</p>
+
+                        <h4>4. Your Rights</h4>
+                        <p>You have the right to access, correct, or delete your personal information. You may also opt out of marketing communications at any time by contacting us or using the unsubscribe link in our emails.</p>
+                    </div>
+                </div>
+                
+                <div class="policy-content" id="safety-content">
+                    <h3>Safety Guidelines</h3>
+                    <div class="policy-text">
+                        <h4>1. Helmet Use</h4>
+                        <p>We strongly recommend wearing a helmet at all times while riding. Helmets are available for free at our locations.</p>
+                        
+                        <h4>2. Traffic Laws</h4>
+                        <p>Riders must obey all local traffic laws and regulations. This includes stopping at stop signs and red lights, riding with traffic, and using hand signals for turns.</p>
+
+                        <h4>3. Prohibited Activities</h4>
+                        <p>Do not ride under the influence of alcohol or drugs. Never carry passengers unless the bicycle is specifically designed for multiple riders. Avoid using mobile devices while riding.</p>
+
+                        <h4>4. Maintenance Checks</h4>
+                        <p>Before each ride, check that tires are properly inflated, brakes are working, and all components are secure. If you notice any issues, contact us immediately.</p>
+
+                        <h4>5. Weather Conditions</h4>
+                        <p>Be aware of weather conditions. Avoid riding in heavy rain, strong winds, or other hazardous conditions that may affect your safety.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                            <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="currentColor"/>
+                        </svg>
+                        <span>RentHub</span>
+                    </div>
+                    <p>Making urban exploration accessible through premium bike rentals. Created by Gijan, Madula, Salazar, & Tumakay.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/itsljeygjn" target="_blank" title="Click to view Gijan's Facebook account"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/kimdwight.madula" target="_blank" title="Click to view Madula's Facebook account"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/christian.dhave.salazar" target="_blank" title="Click to view Salazar's Facebook account"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/asd.tumakay" target="_blank" title="Click to view Tumakay's Facebook account"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> University of Cebu- Main Campus</li>
+                        <li><i class="fas fa-phone"></i> (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> bike@renthub.com</li>
+                        <li><i class="fas fa-clock"></i> Daily 8am-8pm</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 RentHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

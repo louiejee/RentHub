@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard | RentHub</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard-style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                        <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="currentColor"/>
+                    </svg>
+                    <span>RentHub</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" class="active" id="booking-tab"><i class="fas fa-bicycle"></i> My Bookings</a></li>
+                    <li><a href="#" id="history-tab"><i class="fas fa-history"></i> History</a></li>
+                    <li><a href="#" id="settings-tab"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <div class="container">
+            <div class="section-header">
+                <h1>Welcome, <span id="user-name"></span>!</h1>
+                <p>Manage your bookings and account settings</p>
+            </div>
+
+            <!-- Current Bookings Section -->
+            <div class="dashboard-section active" id="booking-section">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-bicycle"></i> My Current Bookings</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="current-bookings">
+                            <!-- Current bookings will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Section -->
+            <div class="dashboard-section" id="history-section">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-history"></i> Booking History</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="past-bookings">
+                            <!-- Past bookings will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="dashboard-section" id="settings-section">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-cog"></i> Account Settings</h2>
+                    </div>
+                    <div class="card-body">
+                        <form id="settings-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="first-name">First Name</label>
+                                    <input type="text" id="first-name" class="styled-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name">Last Name</label>
+                                    <input type="text" id="last-name" class="styled-input" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" class="styled-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" class="styled-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="current-password">Current Password</label>
+                                <input type="password" id="current-password" class="styled-input" placeholder="Required for changes">
+                            </div>
+                            <div class="form-group">
+                                <label for="new-password">New Password</label>
+                                <input type="password" id="new-password" class="styled-input" placeholder="Leave blank to keep current">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password">Confirm New Password</label>
+                                <input type="password" id="confirm-password" class="styled-input">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo">
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                            <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="currentColor"/>
+                        </svg>
+                        <span>RentHub</span>
+                    </div>
+                    <p>Making urban exploration accessible through premium bike rentals. Created by Gijan, Madula, Salazar, & Tumakay.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/itsljeygjn" target="_blank" title="Click to view Gijan's Facebook account"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/kimdwight.madula" target="_blank" title="Click to view Madula's Facebook account"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/christian.dhave.salazar" target="_blank" title="Click to view Salazar's Facebook account"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/asd.tumakay" target="_blank" title="Click to view Tumakay's Facebook account"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> University of Cebu- Main Campus</li>
+                        <li><i class="fas fa-phone"></i> (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> bike@renthub.com</li>
+                        <li><i class="fas fa-clock"></i> Daily 8am-8pm</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 RentHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Initialize dashboard
+            initDashboard(currentUser);
+
+            // Tab switching
+            document.getElementById('booking-tab').addEventListener('click', function(e) {
+                e.preventDefault();
+                switchTab('booking');
+            });
+
+            document.getElementById('history-tab').addEventListener('click', function(e) {
+                e.preventDefault();
+                switchTab('history');
+            });
+
+            document.getElementById('settings-tab').addEventListener('click', function(e) {
+                e.preventDefault();
+                switchTab('settings');
+            });
+
+            // Settings form submission
+            document.getElementById('settings-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveSettings(currentUser);
+            });
+        });
+
+        function initDashboard(user) {
+            document.getElementById('user-name').textContent = user.firstName;
+            
+            // Load user data into settings form
+            document.getElementById('first-name').value = user.firstName;
+            document.getElementById('last-name').value = user.lastName;
+            document.getElementById('email').value = user.email;
+            document.getElementById('phone').value = user.phone;
+
+            // Load bookings
+            loadBookings(user);
+        }
+
+        function loadBookings(currentUser) {
+            const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            const currentList = document.getElementById('current-bookings');
+            const pastList = document.getElementById('past-bookings');
+            
+            currentList.innerHTML = '';
+            pastList.innerHTML = '';
+
+            // Filter bookings for this user only
+            const userBookings = bookings.filter(booking => booking.email === currentUser.email);
+
+            if (userBookings.length === 0) {
+                currentList.innerHTML = createEmptyState('You have no current bookings');
+                pastList.innerHTML = createEmptyState('No past bookings found');
+                return;
+            }
+
+            userBookings.forEach(booking => {
+                const bookingElement = createBookingElement(booking);
+                if (booking.status === 'completed') {
+                    pastList.appendChild(bookingElement);
+                } else {
+                    currentList.appendChild(bookingElement);
+                }
+            });
+
+            // Add empty states if needed
+            if (currentList.children.length === 0) {
+                currentList.innerHTML = createEmptyState('You have no current bookings');
+            }
+            if (pastList.children.length === 0) {
+                pastList.innerHTML = createEmptyState('No past bookings found');
+            }
+        }
+
+        function createBookingElement(booking) {
+            const element = document.createElement('div');
+            element.classList.add('booking-item');
+            
+            element.innerHTML = `
+                <div class="booking-header">
+                    <span class="booking-id">Order #${booking.orderNumber}</span>
+                    <span class="booking-date">${formatDate(booking.date)}</span>
+                </div>
+                <div class="booking-details">
+                    <div>
+                        <span class="detail-label">Bike</span>
+                        <span class="detail-value">${getBikeName(booking.bikeType)}</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Duration</span>
+                        <span class="detail-value">${formatDuration(booking.duration)}</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Total</span>
+                        <span class="detail-value">₱${calculateTotal(booking.duration)}.00</span>
+                    </div>
+                </div>
+                <div class="booking-status ${booking.status || 'ongoing'}">
+                    <i class="fas fa-circle"></i> ${booking.status ? booking.status.charAt(0).toUpperCase() + booking.status.slice(1) : 'Ongoing'}
+                </div>
+            `;
+            
+            return element;
+        }
+
+        function createEmptyState(message) {
+            return `
+                <div class="empty-state">
+                    <i class="fas fa-bicycle"></i>
+                    <p>${message}</p>
+                </div>
+            `;
+        }
+
+        function saveSettings(currentUser) {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            // Verify current password if changing password
+            if (newPassword && currentPassword !== currentUser.password) {
+                alert('Current password is incorrect');
+                return;
+            }
+            
+            // Verify new password matches confirmation
+            if (newPassword && newPassword !== confirmPassword) {
+                alert('New passwords do not match');
+                return;
+            }
+            
+            // Update user data
+            currentUser.firstName = document.getElementById('first-name').value;
+            currentUser.lastName = document.getElementById('last-name').value;
+            currentUser.email = document.getElementById('email').value;
+            currentUser.phone = document.getElementById('phone').value;
+            
+            // Update password if changed
+            if (newPassword) {
+                currentUser.password = newPassword;
+            }
+            
+            // Update in users array
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+            }
+            
+            // Save back to localStorage
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            alert('Settings saved successfully! You may need to login again with your new credentials.');
+        }
+
+        function switchTab(tab) {
+            // Update active tab in navbar
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.getElementById(`${tab}-tab`).classList.add('active');
+
+            // Show corresponding section
+            document.querySelectorAll('.dashboard-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(`${tab}-section`).classList.add('active');
+        }
+
+        // Helper functions
+        function formatDate(dateString) {
+            if (!dateString) return 'Not specified';
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+
+        function formatDuration(duration) {
+            const durations = {
+                '4': '4 hours',
+                '8': '8 hours', 
+                '24': '1 day',
+                '48': '2 days',
+                '72': '3 days'
+            };
+            return durations[duration] || duration;
+        }
+
+        function getBikeName(bikeType) {
+            const bikeNames = {
+                'mountain': 'Mountain Pro XT',
+                'road': 'Road Elite S1',
+                'hybrid': 'City Hybrid Z3',
+                'electric': 'E-Cruiser 5000'
+            };
+            return bikeNames[bikeType] || bikeType;
+        }
+
+        function calculateTotal(duration) {
+            const prices = {
+                '4': 150,
+                '8': 250,
+                '24': 350,
+                '48': 600,
+                '72': 850
+            };
+            return prices[duration] || 0;
+        }
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

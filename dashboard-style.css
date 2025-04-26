@@ -1,0 +1,251 @@
+/* Dashboard Styles */
+.dashboard {
+    padding: 6rem 0 4rem;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+}
+
+.dashboard .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.dashboard .section-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--dark-color);
+}
+
+.dashboard .section-header p {
+    color: var(--gray-color);
+    font-size: 1.1rem;
+}
+
+.dashboard-section {
+    display: none;
+}
+
+.dashboard-section.active {
+    display: block;
+}
+
+.dashboard-card {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 2rem;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-card .card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--light-gray);
+    background-color: var(--light-color);
+}
+
+.dashboard-card .card-header h2 {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--dark-color);
+    margin: 0;
+}
+
+.dashboard-card .card-header h2 i {
+    color: var(--primary-color);
+}
+
+.dashboard-card .card-body {
+    padding: 1.5rem;
+}
+
+/* Bookings List */
+#ongoing-bookings, #completed-bookings {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.booking-item {
+    background-color: var(--light-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    border: 1px solid var(--light-gray);
+}
+
+.booking-item:hover {
+    background-color: #f0f0f0;
+}
+
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+}
+
+.booking-id {
+    font-weight: 600;
+    color: var(--dark-color);
+    font-size: 1.1rem;
+}
+
+.booking-date {
+    font-size: 0.9rem;
+    color: var(--gray-color);
+}
+
+.booking-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin: 1rem 0;
+}
+
+.detail-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--gray-color);
+    margin-bottom: 0.25rem;
+}
+
+.detail-value {
+    font-weight: 500;
+    color: var(--dark-color);
+    font-size: 1rem;
+}
+
+.booking-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--light-gray);
+}
+
+.booking-status i {
+    font-size: 0.5rem;
+}
+
+.booking-status.ongoing {
+    color: #FFA500;
+}
+
+.booking-status.completed {
+    color: var(--primary-color);
+}
+
+.booking-actions {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--light-gray);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 0;
+    color: var(--gray-color);
+}
+
+.empty-state i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    opacity: 0.7;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+}
+
+/* Settings Form */
+#settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+#settings-form .form-group {
+    margin-bottom: 1rem;
+}
+
+#settings-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--dark-color);
+}
+
+#settings-form .styled-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--light-gray);
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+#settings-form .styled-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+/* Navbar Active State */
+.nav-links a.active {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .dashboard {
+        padding: 5rem 0 3rem;
+    }
+    
+    .booking-details {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .booking-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .booking-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard | RentHub</title>
+  <link rel="stylesheet" href="admin-style.css"/>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+            <path d="M12 6C8.69 6 6 8.69 6 12C6 15.31 8.69 18 12 18C15.31 18 18 15.31 18 12C18 8.69 15.31 6 12 6ZM12 16C9.79 16 8 14.21 8 12C8 9.79 9.79 8 12 8C14.21 8 16 9.79 16 12C16 14.21 14.21 16 12 16Z" fill="currentColor"/>
+          </svg>
+          <span>RentHub</span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#" id="bookings-tab">Bookings</a></li>
+          <li><a href="#" id="completed-tab">Completed</a></li>
+          <li><a href="#" id="settings-tab">Settings</a></li> 
+          <li><a href="index.html" class="logout-btn" onclick="logout()">Logout</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="dashboard" id="booking-section">
+      <div class="container">
+        <h1>Admin Dashboard</h1>
+        <p class="subtitle">All current bookings:</p>
+
+        <div class="table-responsive">
+          <table id="booking-table">
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Bike Type</th>
+                <th>Duration</th>
+                <th>Booked At</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="booking-table-body">
+              <!-- Bookings will be inserted here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard" style="display:none;" id="completed-section">
+      <div class="container">
+        <h1>Completed Bookings</h1>
+        <p class="subtitle">List of completed bookings:</p>
+    
+        <div class="table-responsive">
+          <table id="completed-table">
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Bike Type</th>
+                <th>Duration</th>
+                <th>Completed At</th>
+              </tr>
+            </thead>
+            <tbody id="completed-table-body">
+              <!-- Completed bookings will be inserted here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="dashboard" id="settings-section" style="display:none;">
+      <div class="container">
+        <h1>Settings</h1>
+        <p class="subtitle">Admin settings and profile coming soon...</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Updated loadBookings function
+    function loadBookings() {
+    const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    const tableBody = document.getElementById('booking-table-body');
+    tableBody.innerHTML = '';
+
+    const activeBookings = bookings.filter(b => b.status !== 'completed');
+
+    if (activeBookings.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="8">No active bookings found.</td></tr>';
+    } else {
+        activeBookings.forEach((booking, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${booking.orderNumber || 'N/A'}</td>
+                <td>${booking.fullName || 'Not specified'}</td>
+                <td>${booking.email || 'Not specified'}</td>
+                <td>${booking.phone || 'Not specified'}</td>
+                <td>${getBikeName(booking.bikeType)}</td>
+                <td>${formatDuration(booking.duration)}</td>
+                <td>${booking.timestamp || 'Not specified'}</td>
+                <td>
+                    <button class="delete-btn" onclick="deleteBooking(${index})">Delete</button>
+                    <button class="done-btn" onclick="markAsDone(${index})">Done</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    }
+}
+
+function loadCompleted() {
+    const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    const completedList = bookings.filter(b => b.status === 'completed');
+
+    const completedTableBody = document.getElementById('completed-table-body');
+    completedTableBody.innerHTML = '';
+
+    if (completedList.length === 0) {
+        completedTableBody.innerHTML = '<tr><td colspan="7">No completed bookings found.</td></tr>';
+    } else {
+        completedList.forEach((booking) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${booking.orderNumber || 'N/A'}</td>
+                <td>${booking.fullName || 'Not specified'}</td>
+                <td>${booking.email || 'Not specified'}</td>
+                <td>${booking.phone || 'Not specified'}</td>
+                <td>${getBikeName(booking.bikeType)}</td>
+                <td>${formatDuration(booking.duration)}</td>
+                <td>${new Date().toLocaleDateString()}</td>
+            `;
+            completedTableBody.appendChild(row);
+        });
+    }
+}
+
+function markAsDone(index) {
+    const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    const activeBookings = bookings.filter(b => b.status !== 'completed');
+
+    if (index < 0 || index >= activeBookings.length) {
+        alert('Error: Invalid booking index');
+        return;
+    }
+
+    const bookingToUpdate = activeBookings[index];
+
+    // Find and update the original booking in the bookings array
+    const originalIndex = bookings.findIndex(b => b.orderNumber === bookingToUpdate.orderNumber);
+    if (originalIndex !== -1) {
+        bookings[originalIndex].status = 'completed';
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+        alert(`Booking #${bookingToUpdate.orderNumber} has been marked as Completed!`);
+
+        loadBookings();
+        loadCompleted();
+    }
+}
+
+function deleteBooking(index) {
+    const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+    const activeBookings = bookings.filter(b => b.status !== 'completed');
+
+    if (index < 0 || index >= activeBookings.length) {
+        alert('Error: Invalid booking index');
+        return;
+    }
+
+    const bookingToDelete = activeBookings[index];
+    const originalIndex = bookings.findIndex(b => b.orderNumber === bookingToDelete.orderNumber);
+
+    if (originalIndex !== -1) {
+        bookings.splice(originalIndex, 1);
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+        alert(`Booking #${bookingToDelete.orderNumber} has been deleted successfully!`);
+
+        loadBookings();
+        loadCompleted();
+    }
+}
+
+// Switch between Bookings and Completed
+document.addEventListener('DOMContentLoaded', () => {
+    loadBookings();
+    loadCompleted();
+
+    document.getElementById('completed-tab').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('section.dashboard').forEach(section => section.style.display = 'none');
+        document.getElementById('completed-section').style.display = 'block';
+    });
+});
+
+function getBikeName(bikeType) {
+    const bikeNames = {
+        'mountain': 'Mountain Pro XT',
+        'road': 'Road Elite S1',
+        'hybrid': 'City Hybrid Z3',
+        'electric': 'E-Cruiser 5000'
+    };
+    return bikeNames[bikeType] || bikeType;
+}
+
+function formatDuration(duration) {
+    const durations = {
+        '4': '4 hours',
+        '8': '8 hours',
+        '24': '1 day',
+        '48': '2 days',
+        '72': '3 days'
+    };
+    return durations[duration] || duration;
+}
+
+    // Helper function to get bike name
+    function getBikeName(bikeType) {
+        const bikeNames = {
+            'mountain': 'Mountain Pro XT',
+            'road': 'Road Elite S1',
+            'hybrid': 'City Hybrid Z3',
+            'electric': 'E-Cruiser 5000'
+        };
+        return bikeNames[bikeType] || bikeType;
+    }
+
+    // Handle Tab Switching
+    document.addEventListener('DOMContentLoaded', () => {
+      loadBookings();
+      loadCompleted();
+
+      document.getElementById('bookings-tab').addEventListener('click', function(e) {
+        e.preventDefault();
+        switchTab('booking');
+      });
+
+      document.getElementById('completed-tab').addEventListener('click', function(e) {
+        e.preventDefault();
+        switchTab('completed');
+      });
+
+      document.getElementById('settings-tab').addEventListener('click', function(e) {
+        e.preventDefault();
+        switchTab('settings');
+      });
+    });
+
+    function switchTab(tab) {
+      document.getElementById('booking-section').style.display = (tab === 'booking') ? 'block' : 'none';
+      document.getElementById('completed-section').style.display = (tab === 'completed') ? 'block' : 'none';
+      document.getElementById('settings-section').style.display = (tab === 'settings') ? 'block' : 'none';
+    }
+
+    // Function to delete a booking
+    function deleteBooking(index) {
+        if (confirm('Are you sure you want to delete this booking?')) {
+            // Get current bookings from localStorage
+            const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+            
+            // Verify index is valid
+            if (index < 0 || index >= bookings.length) {
+                alert('Error: Invalid booking index');
+                return;
+            }
+            
+            // Remove the booking at specified index
+            const deletedBooking = bookings.splice(index, 1);
+            
+            // Save updated bookings back to localStorage
+            localStorage.setItem('bookings', JSON.stringify(bookings));
+            
+            // Show confirmation message
+            alert(`Booking #${deletedBooking[0].orderNumber} has been deleted successfully`);
+            
+            // Refresh the bookings display
+            loadBookings();
+        }
+    }
+
+    // Load the bookings when the page loads
+    window.onload = loadBookings;
+  </script>
+</body>
+</html>
