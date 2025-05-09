@@ -1,0 +1,167 @@
+:root {
+  --primary: #4CAF50;
+  --light: #f9f9f9;
+  --dark: #333;
+  --gray: #777;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f0f2f5;
+  color: var(--dark);
+}
+
+.dashboard {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--light);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.dashboard-section {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.card-box {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.scanner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.camera {
+  width: 320px;
+  height: 240px;
+  background-color: #ddd;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #555;
+}
+
+.timestamp {
+  font-size: 1rem;
+  color: var(--gray);
+}
+
+.salary-box span {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.calendar div {
+  background-color: #e3f2fd;
+  padding: 0.8rem;
+  text-align: center;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Staff Details Section */
+.staff-details {
+  display: none;
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.staff-details h3 {
+  font-size: 1.5rem;
+  margin-left: 150px;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+
+.staff-detail-item {
+  font-size: 1.1rem;
+  color: var(--gray);
+  margin-bottom: 0.5rem;
+}
+
+.staff-detail-item strong {
+  color: var(--dark);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-section {
+    display: block;
+  }
+
+  .staff-details {
+    flex-direction: column;
+    margin-left: 10px;
+    align-items: center;
+  }
+
+  .staff-details .profile-icon {
+    margin-right: 0; /* Remove margin for mobile */
+    margin-bottom: 1rem; /* Add margin for spacing */
+  }
+}
+/* General Button Styling */
+button {
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: darken(var(--primary), 10%);
+  transform: scale(1.05);
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Specific Styling for Logout Button */
+.logout-btn {
+  background-color: #e53935; /* Red color for the logout button */
+}
+
+.logout-btn:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+}
+
+

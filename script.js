@@ -1,3 +1,4 @@
+// script.js
 document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
     const bookingModal = document.getElementById('booking-modal');

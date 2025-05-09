@@ -1,0 +1,170 @@
+<!--staff-dashboard.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Staff Dashboard</title>
+  <link rel="stylesheet" href="staff-dashboard.css"> <!-- Linked external CSS -->
+  <link rel="stylesheet" href="admin-style.css">
+  <style>
+    /* Additional styling to adjust the layout */
+    .dashboard-section {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    /* Wrapper for the face scanner and staff details */
+    .scanner-staff-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      border: 2px solid #ddd; /* Adds border around the container */
+      border-radius: 8px;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    .scanner, .staff-details {
+      width: 48%; /* Both elements take up 48% of the container */
+    }
+
+    .scanner {
+      background: #f0f0f0;
+      padding: 20px;
+      text-align: center;
+      border-radius: 8px;
+    }
+
+    .staff-details {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+    }
+
+    .form-group input[type="date"] {
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <nav>
+        <a class="logo" href="#">Employee Dashboard</a>
+        <ul class="nav-links">
+          <li><button onclick="calculateSalary()">Calculate Salary</button></li>
+          <li><button onclick="scrollToCalendar()">Attendance Calendar</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="dashboard">
+    <div class="container">
+      <div class="scanner-staff-container">
+        <!-- Scanner Section -->
+        <div class="card-box scanner">
+          <h2>Face Scanner Attendance</h2>
+          <div class="camera" onclick="showStaffDetails()">CAMERA FEED</div>
+          <div class="timestamp" id="timestamp">--:--:--</div>
+        </div>
+
+        <!-- Staff Details Section (Initially hidden) -->
+        <div class="staff-details" id="staff-details">
+            <h3>Staff Details</h3>
+            <div class="staff-detail-item">
+                <strong>Full Name:</strong> John Doe
+            </div>
+            <div class="staff-detail-item">
+                <strong>Email:</strong> johndoe@renthub.com
+            </div>
+            <div class="staff-detail-item">
+                <strong>Gender:</strong> Male
+            </div>
+            <div class="staff-detail-item">
+                <strong>Birthday:</strong> January 1, 1990
+            </div>
+            <div class="staff-detail-item">
+                <strong>Address:</strong> 123 Main Street, City, Country
+            </div>
+        </div>
+      </div>
+
+      <div class="dashboard-section">
+        <div class="card-box salary-box">
+          <h2>Salary Calculator</h2>
+          <span>Attendance Days: <strong id="days-attended">22</strong></span>
+          <span>Daily Rate: ₱<strong>500</strong></span>
+          <span>Total Salary: ₱<strong id="total-salary">11,000</strong></span>
+        </div>
+
+        <div class="card-box" id="calendar-box">
+          <h2>Attendance Calendar</h2>
+          <div class="calendar">
+            <div>1</div><div>2</div><div style="background:#90caf9">3</div>
+            <div style="background:#90caf9">4</div><div>5</div><div>6</div><div style="background:#90caf9">7</div>
+            <div>8</div><div>9</div><div style="background:#90caf9">10</div><div>11</div><div>12</div><div>13</div><div style="background:#90caf9">14</div>
+            <div>15</div><div>16</div><div>17</div><div>18</div><div>19</div><div style="background:#90caf9">20</div><div>21</div>
+            <div style="background:#90caf9">22</div><div>23</div><div>24</div><div>25</div><div>26</div><div>27</div><div>28</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Function to toggle staff details visibility
+    function toggleStaffDetails() {
+      const staffDetails = document.getElementById('staff-details');
+      const isVisible = staffDetails.style.display === 'block';
+      staffDetails.style.display = isVisible ? 'none' : 'block';
+    }
+
+    function updateTime() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString();
+      document.getElementById('timestamp').textContent = timeString;
+    }
+
+    function calculateSalary() {
+      const days = parseInt(document.getElementById("days-attended").textContent);
+      const dailyRate = 500;
+      const total = days * dailyRate;
+      document.getElementById("total-salary").textContent = total.toLocaleString();
+    }
+
+    function scrollToCalendar() {
+      document.getElementById("calendar-box").scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Function to simulate the scanning and showing staff details
+    function showStaffDetails() {
+      // Simulate face recognition
+      setTimeout(function() {
+        document.getElementById("staff-details").style.display = "block";  // Show staff details after scanning
+      }, 1000); // Simulate a 1-second delay after "scanning"
+    }
+
+    setInterval(updateTime, 1000);
+    updateTime(); // initialize immediately
+  </script>
+</body>
+</html>
