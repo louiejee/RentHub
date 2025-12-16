@@ -45,27 +45,36 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('booking-form').reset();
       });
       
-    // Bike data with daily, 4-hour, and 8-hour pricing
+    // Bike data - Daily prices remain EXACT (280, 320, 450, 300)
+    // 4h, 8h, 2d, 3d are calculated as percentages of daily rate
     const bikePrices = {
         'mountain': { 
-            daily: 280,
-            hourly4: 150,    // Fixed 4-hour rate
-            hourly8: 250     // Fixed 8-hour rate
+            daily: 280,     // EXACT - NO CHANGE
+            // 4 hours = 60% of daily (280 * 0.6 = 168)
+            // 8 hours = 80% of daily (280 * 0.8 = 224)
+            // 2 days = daily * 2 - 100 discount (280 * 2 - 100 = 460)
+            // 3 days = daily * 3 - 150 discount (280 * 3 - 150 = 690)
         },
         'road': { 
-            daily: 320,
-            hourly4: 171,    // ~60% of daily (320 * 0.6 = 192, rounded to 190)
-            hourly8: 256     // ~80% of daily (320 * 0.8 = 256)
+            daily: 320,     // EXACT - NO CHANGE
+            // 4 hours = 60% of daily (320 * 0.6 = 192)
+            // 8 hours = 80% of daily (320 * 0.8 = 256)
+            // 2 days = daily * 2 - 100 discount (320 * 2 - 100 = 540)
+            // 3 days = daily * 3 - 150 discount (320 * 3 - 150 = 810)
         },
         'electric': { 
-            daily: 450,
-            hourly4: 270,    // 60% of daily (450 * 0.6 = 270)
-            hourly8: 360     // 80% of daily (450 * 0.8 = 360)
+            daily: 450,     // EXACT - NO CHANGE
+            // 4 hours = 60% of daily (450 * 0.6 = 270)
+            // 8 hours = 80% of daily (450 * 0.8 = 360)
+            // 2 days = daily * 2 - 100 discount (450 * 2 - 100 = 800)
+            // 3 days = daily * 3 - 150 discount (450 * 3 - 150 = 1200)
         },
         'hybrid': { 
-            daily: 300,
-            hourly4: 180,    // 60% of daily (300 * 0.6 = 180)
-            hourly8: 240     // 80% of daily (300 * 0.8 = 240)
+            daily: 300,     // EXACT - NO CHANGE
+            // 4 hours = 60% of daily (300 * 0.6 = 180)
+            // 8 hours = 80% of daily (300 * 0.8 = 240)
+            // 2 days = daily * 2 - 100 discount (300 * 2 - 100 = 500)
+            // 3 days = daily * 3 - 150 discount (300 * 3 - 150 = 750)
         }
     };
     
@@ -425,17 +434,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const bikeData = bikePrices[bikeType];
         let price = bikeData.daily; // Default to daily price
         
-        // Calculate price based on duration
+        // Calculate price based on duration (as percentage of daily rate)
         if (duration === '4') {
-            price = bikeData.hourly4;
+            price = Math.round(bikeData.daily * 0.6); // 60% of daily
         } else if (duration === '8') {
-            price = bikeData.hourly8;
+            price = Math.round(bikeData.daily * 0.8); // 80% of daily
         } else if (duration === '24') {
-            price = bikeData.daily;
+            price = bikeData.daily; // 100% of daily
         } else if (duration === '48') {
-            price = bikeData.daily * 2 - 100;
+            price = (bikeData.daily * 2) - 100; // 2 days with ₱100 discount
         } else if (duration === '72') {
-            price = bikeData.daily * 3 - 150;
+            price = (bikeData.daily * 3) - 150; // 3 days with ₱150 discount
         }
     
         // Get the label from the dropdown
@@ -470,117 +479,117 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function showBikeDetails(bikeType) {
-        const modal = document.getElementById('bike-details-modal');
-        modal.style.display = 'block';
-        
-        // Set bike details based on type
-        let bikeName, bikeImage, bikeSpecs, bikeFeatures, bikePrice;
-        
-        switch(bikeType) {
-            case 'mountain':
-                bikeName = 'Mountain Pro XT';
-                bikeImage = 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&fit=crop&q=80';
-                bikeSpecs = [
-                    '21-speed Shimano gears',
-                    'Hydraulic disc brakes',
-                    'Aluminum frame',
-                    '27.5" wheels'
-                ];
-                bikeFeatures = [
-                    'Front suspension fork',
-                    'Ergonomic grips',
-                    'Tubeless-ready tires',
-                    'Dropper post compatible'
-                ];
-                bikePrice = '₱280/day';
-                break;
-            case 'road':
-                bikeName = 'Road Elite S1';
-                bikeImage = 'https://images.unsplash.com/photo-1511994298241-608e28f14fde?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&fit=crop&q=80';
-                bikeSpecs = [
-                    '18-speed Shimano groupset',
-                    'Carbon fiber fork',
-                    'Lightweight aluminum frame',
-                    '700c wheels'
-                ];
-                bikeFeatures = [
-                    'Aero handlebars',
-                    'Clipless pedal compatible',
-                    'Puncture-resistant tires',
-                    'Water bottle mounts'
-                ];
-                bikePrice = '₱320/day';
-                break;
-            case 'electric':
-                bikeName = 'E-Cruiser 5000';
-                bikeImage = 'https://images.unsplash.com/photo-1558981852-426c6c22a060?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&fit=crop&q=80';
-                bikeSpecs = [
-                    '250W motor',
-                    '50km battery range',
-                    '7-speed Shimano gears',
-                    'Max speed: 25km/h'
-                ];
-                bikeFeatures = [
-                    'LED display',
-                    'USB charging port',
-                    'Integrated lights',
-                    'Adjustable pedal assist'
-                ];
-                bikePrice = '₱450/day';
-                break;
-            case 'hybrid':
-                bikeName = 'City Hybrid Z3';
-                bikeImage = 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&fit=crop&q=80';
-                bikeSpecs = [
-                    '24-speed Shimano gears',
-                    'Steel frame',
-                    '700c wheels',
-                    'V-brakes'
-                ];
-                bikeFeatures = [
-                    'Comfort saddle',
-                    'Upright riding position',
-                    'Fender and rack mounts',
-                    'Kickstand included'
-                ];
-                bikePrice = '₱300/day';
-                break;
-        }
-        
-        // Update modal content
-        document.getElementById('detail-bike-name').textContent = bikeName;
-        document.getElementById('detail-bike-image').src = bikeImage;
-        document.getElementById('detail-bike-image').alt = bikeName;
-        document.getElementById('detail-bike-price').textContent = bikePrice;
-        
-        const specsList = document.getElementById('detail-bike-specs');
-        specsList.innerHTML = '';
-        bikeSpecs.forEach(spec => {
-            const li = document.createElement('li');
-            li.textContent = spec;
-            specsList.appendChild(li);
-        });
-        
-        const featuresList = document.getElementById('detail-bike-features');
-        featuresList.innerHTML = '';
-        bikeFeatures.forEach(feature => {
-            const li = document.createElement('li');
-            li.textContent = feature;
-            featuresList.appendChild(li);
-        });
-        
-        // Set up book this bike button
-        document.querySelector('.book-this-btn').addEventListener('click', function() {
-            document.getElementById('bike-type').value = bikeType;
-            modal.style.display = 'none';
-            openBookingModal();
-        });
-        
-        // Close button for bike details modal
-        document.querySelector('#bike-details-modal .close-modal').addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
+    const modal = document.getElementById('bike-details-modal');
+    modal.style.display = 'block';
+    
+    // Set bike details based on type
+    let bikeName, bikeImage, bikeSpecs, bikeFeatures, bikePrice;
+    
+    switch(bikeType) {
+        case 'mountain':
+            bikeName = 'Mountain Pro XT';
+            bikeImage = 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&fit=crop&q=80';
+            bikeSpecs = [
+                '21-speed Shimano gears',
+                'Hydraulic disc brakes',
+                'Aluminum frame',
+                '27.5" wheels'
+            ];
+            bikeFeatures = [
+                'Front suspension fork',
+                'Ergonomic grips',
+                'Tubeless-ready tires',
+                'Dropper post compatible'
+            ];
+            bikePrice = '₱280/day';  // CORRECT
+            break;
+        case 'road':
+            bikeName = 'Road Elite S1';
+            bikeImage = 'https://images.unsplash.com/photo-1511994298241-608e28f14fde?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&fit=crop&q=80';
+            bikeSpecs = [
+                '18-speed Shimano groupset',
+                'Carbon fiber fork',
+                'Lightweight aluminum frame',
+                '700c wheels'
+            ];
+            bikeFeatures = [
+                'Aero handlebars',
+                'Clipless pedal compatible',
+                'Puncture-resistant tires',
+                'Water bottle mounts'
+            ];
+            bikePrice = '₱320/day';  // CORRECT
+            break;
+        case 'electric':  // THIS IS E-CRUISER 5000
+            bikeName = 'E-Cruiser 5000';
+            bikeImage = 'https://images.unsplash.com/photo-1558981852-426c6c22a060?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&fit=crop&q=80';
+            bikeSpecs = [
+                '250W motor',
+                '50km battery range',
+                '7-speed Shimano gears',
+                'Max speed: 25km/h'
+            ];
+            bikeFeatures = [
+                'LED display',
+                'USB charging port',
+                'Integrated lights',
+                'Adjustable pedal assist'
+            ];
+            bikePrice = '₱450/day';  // CORRECT - E-CRUISER IS ₱450
+            break;
+        case 'hybrid':  // THIS IS CITY HYBRID Z3
+            bikeName = 'City Hybrid Z3';
+            bikeImage = 'https://images.unsplash.com/photo-1571068316344-75bc76f77890?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&h=400&fit=crop&q=80';
+            bikeSpecs = [
+                '24-speed Shimano gears',
+                'Steel frame',
+                '700c wheels',
+                'V-brakes'
+            ];
+            bikeFeatures = [
+                'Comfort saddle',
+                'Upright riding position',
+                'Fender and rack mounts',
+                'Kickstand included'
+            ];
+            bikePrice = '₱300/day';  // CORRECT - CITY HYBRID IS ₱300
+            break;
     }
+    
+    // Update modal content
+    document.getElementById('detail-bike-name').textContent = bikeName;
+    document.getElementById('detail-bike-image').src = bikeImage;
+    document.getElementById('detail-bike-image').alt = bikeName;
+    document.getElementById('detail-bike-price').textContent = bikePrice;
+    
+    const specsList = document.getElementById('detail-bike-specs');
+    specsList.innerHTML = '';
+    bikeSpecs.forEach(spec => {
+        const li = document.createElement('li');
+        li.textContent = spec;
+        specsList.appendChild(li);
+    });
+    
+    const featuresList = document.getElementById('detail-bike-features');
+    featuresList.innerHTML = '';
+    bikeFeatures.forEach(feature => {
+        const li = document.createElement('li');
+        li.textContent = feature;
+        featuresList.appendChild(li);
+    });
+    
+    // Set up book this bike button
+    document.querySelector('.book-this-btn').addEventListener('click', function() {
+        document.getElementById('bike-type').value = bikeType;
+        modal.style.display = 'none';
+        openBookingModal();
+    });
+    
+    // Close button for bike details modal
+    document.querySelector('#bike-details-modal .close-modal').addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+}
     
     function loadBookings() {
         const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
@@ -727,23 +736,24 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('bike-type').addEventListener('change', updatePriceDisplay);
     
     function updatePriceDisplay() {
-        const duration = document.getElementById('rental-duration').value;
-        const bikeType = document.getElementById('bike-type').value;
-        const bikeData = bikePrices[bikeType];
-        let price = bikeData.daily; // Default to daily price
-        
-        // Calculate price based on duration
-        if (duration === '4') {
-            price = bikeData.hourly4;
-        } else if (duration === '8') {
-            price = bikeData.hourly8;
-        } else if (duration === '24') {
-            price = bikeData.daily;
-        } else if (duration === '48') {
-            price = bikeData.daily * 2 - 100; // 2-day discount
-        } else if (duration === '72') {
-            price = bikeData.daily * 3 - 150; // 3-day discount
-        }
+    const duration = document.getElementById('rental-duration').value;
+    const bikeType = document.getElementById('bike-type').value;
+    
+    // FIXED prices regardless of bike type
+    let price = 0;
+    
+    if (duration === '4') {
+        price = 150;  // Same for all bikes
+    } else if (duration === '8') {
+        price = 250;  // Same for all bikes
+    } else if (duration === '24') {
+        // Use the bike's daily price
+        price = bikePrices[bikeType].daily;
+    } else if (duration === '48') {
+        price = (bikePrices[bikeType].daily * 2) - 100;
+    } else if (duration === '72') {
+        price = (bikePrices[bikeType].daily * 3) - 150;
+    }
         
         document.querySelector('.amount').textContent = `₱${price}`;
         
