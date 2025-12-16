@@ -45,15 +45,28 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('booking-form').reset();
       });
       
-      
-      
-
-    // Bike data
+    // Bike data with daily, 4-hour, and 8-hour pricing
     const bikePrices = {
-        'mountain': { base: 280, daily: 280 },
-        'road': { base: 320, daily: 320 },
-        'electric': { base: 300, daily: 300 },
-        'hybrid': { base: 450, daily: 450 }
+        'mountain': { 
+            daily: 280,
+            hourly4: 150,    // Fixed 4-hour rate
+            hourly8: 250     // Fixed 8-hour rate
+        },
+        'road': { 
+            daily: 320,
+            hourly4: 171,    // ~60% of daily (320 * 0.6 = 192, rounded to 190)
+            hourly8: 256     // ~80% of daily (320 * 0.8 = 256)
+        },
+        'electric': { 
+            daily: 450,
+            hourly4: 270,    // 60% of daily (450 * 0.6 = 270)
+            hourly8: 360     // 80% of daily (450 * 0.8 = 360)
+        },
+        'hybrid': { 
+            daily: 300,
+            hourly4: 180,    // 60% of daily (300 * 0.6 = 180)
+            hourly8: 240     // 80% of daily (300 * 0.8 = 240)
+        }
     };
     
     // Initialize modal and steps
@@ -121,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    
     // Payment method toggle
     document.querySelectorAll('input[name="payment"]').forEach(radio => {
         radio.addEventListener('change', function() {
@@ -134,11 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    
     document.getElementById('close-confirmation').addEventListener('click', () => {
         location.reload();
     });
-    
     
     // FAQ accordion
     document.querySelectorAll('.faq-question').forEach(question => {
@@ -232,8 +242,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-   
-
     function resetError(input) {
         input.setCustomValidity("");
         const errorElement = input.nextElementSibling;
@@ -266,8 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-
-    //Functions
+    // Functions
     function openBookingModal() {
         const bikeType = document.getElementById('bike-type').value;
         const duration = document.getElementById('rental-duration').value;
@@ -414,16 +421,22 @@ document.addEventListener('DOMContentLoaded', function() {
         changeStep(2);
     }
   
-    
     function updateBookingSummary(bikeType, duration, date) {
         const bikeData = bikePrices[bikeType];
-        let price = bikeData?.base || 0;
-    
-        if (duration === '4') price = 150;
-        else if (duration === '8') price = 250;
-        else if (duration === '24') price = bikeData.daily;
-        else if (duration === '48') price = bikeData.daily * 2 - 100;
-        else if (duration === '72') price = bikeData.daily * 3 - 150;
+        let price = bikeData.daily; // Default to daily price
+        
+        // Calculate price based on duration
+        if (duration === '4') {
+            price = bikeData.hourly4;
+        } else if (duration === '8') {
+            price = bikeData.hourly8;
+        } else if (duration === '24') {
+            price = bikeData.daily;
+        } else if (duration === '48') {
+            price = bikeData.daily * 2 - 100;
+        } else if (duration === '72') {
+            price = bikeData.daily * 3 - 150;
+        }
     
         // Get the label from the dropdown
         const bikeTypeSelect = document.getElementById('bike-type');
@@ -449,7 +462,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('order-number').textContent = orderNumber;
         document.getElementById('confirmation-number').textContent = orderNumber;
     }
-    
     
     function formatDate(dateString) {
         if (!dateString) return 'Not selected';
@@ -690,7 +702,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return new Date(dateString).toLocaleDateString('en-US', options);
     }
     
-    
     // Close modal when clicking outside
     window.addEventListener('click', function(event) {
         if (event.target === bookingModal || event.target === authModal) {
@@ -719,13 +730,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const duration = document.getElementById('rental-duration').value;
         const bikeType = document.getElementById('bike-type').value;
         const bikeData = bikePrices[bikeType];
-        let price = bikeData.base;
+        let price = bikeData.daily; // Default to daily price
         
-        if (duration === '4') price = 150;
-        else if (duration === '8') price = 250;
-        else if (duration === '24') price = bikeData.daily;
-        else if (duration === '48') price = bikeData.daily * 2 - 100;
-        else if (duration === '72') price = bikeData.daily * 3 - 150;
+        // Calculate price based on duration
+        if (duration === '4') {
+            price = bikeData.hourly4;
+        } else if (duration === '8') {
+            price = bikeData.hourly8;
+        } else if (duration === '24') {
+            price = bikeData.daily;
+        } else if (duration === '48') {
+            price = bikeData.daily * 2 - 100; // 2-day discount
+        } else if (duration === '72') {
+            price = bikeData.daily * 3 - 150; // 3-day discount
+        }
         
         document.querySelector('.amount').textContent = `₱${price}`;
         
